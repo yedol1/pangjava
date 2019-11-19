@@ -1,3 +1,4 @@
+//ìš°ì™€ì™€ì™€ì™€ì™€ì˜¹
 package project;
 
 import java.awt.Color;
@@ -26,16 +27,16 @@ import javax.swing.Timer;
 
 public class FlappyBird implements ActionListener, MouseListener, KeyListener {
 	public static FlappyBird flappyBird;
-	public final int WIDTH = 1500, HEIGHT = 800; // Ã¢ Å©±â
+	public final int WIDTH = 1500, HEIGHT = 800; // ì°½ í¬ê¸°
 	public Renderer renderer;
-	public Rectangle bird; // »õ ¸ğ¾ç
-	public int ticks, yMotion, score; // ?? , yÃà ¼Óµµ, Á¡¼ö
-	public ArrayList<Rectangle> columns; // Àå¾Ö¹° ¾î·¹ÀÌ ¸®½ºÆ®
-	public Random rand; // ·£´ıÇÔ¼öJ
-	public boolean gameOver, started = true; // °ÔÀÓ ¿À¹ö¿Í, °ÔÀÓ ½ÃÀÛ
+	public Rectangle bird; // ìƒˆ ëª¨ì–‘
+	public int ticks, yMotion, score; // ?? , yì¶• ì†ë„, ì ìˆ˜
+	public ArrayList<Rectangle> columns; // ì¥ì• ë¬¼ ì–´ë ˆì´ ë¦¬ìŠ¤íŠ¸
+	public Random rand; // ëœë¤í•¨ìˆ˜J
+	public boolean gameOver, started = true; // ê²Œì„ ì˜¤ë²„ì™€, ê²Œì„ ì‹œì‘
 	public boolean gameOverSound = false;
-	Clip clipBackGroundMusic; // ¹è°æÀ½¾Ç Å¬¸³
-	Clip clip; // È¿°úÀ½ Å¬¸³
+	Clip clipBackGroundMusic; // ë°°ê²½ìŒì•… í´ë¦½
+	Clip clip; // íš¨ê³¼ìŒ í´ë¦½
 
 	public FlappyBird() {
 		JFrame jframe = new JFrame();
@@ -43,15 +44,15 @@ public class FlappyBird implements ActionListener, MouseListener, KeyListener {
 		renderer = new Renderer();
 		rand = new Random();
 		jframe.add(renderer);
-		jframe.setTitle("Flappy Bird"); // Å¸ÀÌÆ² Á¦¸ñ
+		jframe.setTitle("Flappy Bird"); // íƒ€ì´í‹€ ì œëª©
 // jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jframe.addMouseListener(this); // ¸¶¿ì½º ¸®½ºÆ®
-		jframe.addKeyListener(this); // Å° ¸®½º³Ê
-		jframe.setSize(WIDTH, HEIGHT); // Ã¢ È­¸é Å©±â
+		jframe.addMouseListener(this); // ë§ˆìš°ìŠ¤ ë¦¬ìŠ¤íŠ¸
+		jframe.addKeyListener(this); // í‚¤ ë¦¬ìŠ¤ë„ˆ
+		jframe.setSize(WIDTH, HEIGHT); // ì°½ í™”ë©´ í¬ê¸°
 		jframe.setVisible(true);
-		jframe.setResizable(false); // È­¸é Ã¢À» ´Ã¸± ¼ö ÀÖÀ½
-		bird = new Rectangle(WIDTH / 2 - 10, 100, 80, 60); // Rectangle(xÀ§Ä¡,yÀ§Ä¡,xÅ©±â,yÅ©±â)
-		columns = new ArrayList<Rectangle>(); // ¿©·¯°³¸¦ ¸¸µé¾î¾ß ÇÏ¹Ç·Î ¾î·¹ÀÌ¸®½ºÆ®·Î ±¸Çö
+		jframe.setResizable(false); // í™”ë©´ ì°½ì„ ëŠ˜ë¦´ ìˆ˜ ìˆìŒ
+		bird = new Rectangle(WIDTH / 2 - 10, 100, 80, 60); // Rectangle(xìœ„ì¹˜,yìœ„ì¹˜,xí¬ê¸°,yí¬ê¸°)
+		columns = new ArrayList<Rectangle>(); // ì—¬ëŸ¬ê°œë¥¼ ë§Œë“¤ì–´ì•¼ í•˜ë¯€ë¡œ ì–´ë ˆì´ë¦¬ìŠ¤íŠ¸ë¡œ êµ¬í˜„
 		addColumn(true);
 		addColumn(true);
 		addColumn(true);
@@ -135,7 +136,7 @@ public class FlappyBird implements ActionListener, MouseListener, KeyListener {
 						&& bird.x + bird.width / 2 < column.x + column.width / 2 + 10) {
 					score++;
 				}
-				if (column.intersects(bird)) // Ä®·³°ú »õ°¡ Ãæµ¿ÇÒ ¶§ (±³ÁıÇÕÀÇÀÇ¹Ì)
+				if (column.intersects(bird)) // ì¹¼ëŸ¼ê³¼ ìƒˆê°€ ì¶©ë™í•  ë•Œ (êµì§‘í•©ì˜ì˜ë¯¸)
 				{
 					gameOver = true;
 					if (bird.x <= column.x) {
