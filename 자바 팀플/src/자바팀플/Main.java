@@ -2,6 +2,8 @@ package 자바팀플;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -22,14 +24,13 @@ public class Main extends JFrame {
 	ImageIcon bgImage;
 	JLabel bgLabel;
 	Clip clip; // 오디오 클립 만들기
-	
+
 	public Main() {
 		setTitle("플라잉 펭귄");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container container = getContentPane();
 		container.setLayout(null);
-		
-		
+
 		/*
 		 * 백그라운드 이미지
 		 */
@@ -47,14 +48,13 @@ public class Main extends JFrame {
 			public void mousePressed(MouseEvent e) {
 // TODO Auto-generated method stub	
 				clip.stop();
-			//	if(FlappyBird.flappyBird.clipBackGroundMusic.isActive()==true)
-			//		FlappyBird.flappyBird.clipBackGroundMusic.stop();
-				Fish.fish = new Fish();//스노우게임연결
+				// if(FlappyBird.flappyBird.clipBackGroundMusic.isActive()==true)
+				// FlappyBird.flappyBird.clipBackGroundMusic.stop();
+				Fish.fish = new Fish();// 스노우게임연결
 			}
 		});
 
-
-		//출처: https://betatester.tistory.com/26 [It's My Real Life]
+		// 출처: https://betatester.tistory.com/26 [It's My Real Life]
 		/*
 		 * 버튼 위치 및 크기 설정 버튼 색깔 지정 버튼 글자 색깔 지정
 		 */
@@ -64,61 +64,68 @@ public class Main extends JFrame {
 		/*
 		 * 버튼 2 과 게임 2 연결운전
 		 */
-		/*JButton btn2 = new JButton("운전 면허 시험");
-		btn2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-/* TODO Auto-generated method stub
-				clip.stop();
-				FlappyBird.flappyBird = new FlappyBird();
-			}
-		});*/
+		/*
+		 * JButton btn2 = new JButton("운전 면허 시험"); btn2.addMouseListener(new
+		 * MouseAdapter() {
+		 * 
+		 * @Override public void mousePressed(MouseEvent e) { /* TODO Auto-generated
+		 * method stub clip.stop(); FlappyBird.flappyBird = new FlappyBird(); } });
+		 */
 		/*
 		 * 버튼 위치 및 크기 설정 버튼 색깔 지정 버튼 글자 색깔 지정
 		 */
-		/*btn2.setBounds(334, 583, 143, 124);
-		btn2.setBackground(Color.BLUE);*/
+		/*
+		 * btn2.setBounds(334, 583, 143, 124); btn2.setBackground(Color.BLUE);
+		 */
 // btn2.setForeground(Color.WHITE);
 		/*
 		 * 버튼 3 과 게임 3 연결
 		 */
-		/*JButton btn3 = new JButton("백수퇴치");
-		btn3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				clip.stop();
-				AdultFilter.adultfilter = new AdultFilter();
-			}
-		});*/
+		/*
+		 * JButton btn3 = new JButton("백수퇴치"); btn3.addMouseListener(new MouseAdapter()
+		 * {
+		 * 
+		 * @Override public void mousePressed(MouseEvent e) { clip.stop();
+		 * AdultFilter.adultfilter = new AdultFilter(); } });
+		 */
 		/*
 		 * 버튼 위치 및 크기 설정 버튼 색깔 지정 버튼 글자 색깔 지정
 		 */
-		/*btn3.setBounds(477, 620, 120, 87);
-		btn3.setBackground(Color.GREEN);*/
+		/*
+		 * btn3.setBounds(477, 620, 120, 87); btn3.setBackground(Color.GREEN);
+		 */
 // btn3.setForeground(Color.WHITE);
 		/*
 		 * 배경화면
 		 */
-		bgLabel.setBounds(0, 0, 800, 1000);//배경화면 크기설정
+		bgLabel.setBounds(0, 0, 800, 1000);// 배경화면 크기설정
 		/*
 		 * 컨테이너에 버튼 붙이기
 		 */
 		container.add(btn1);
-		//container.add(btn2);
-		//container.add(btn3);
+		// container.add(btn2);
+		// container.add(btn3);
 // container.add(btn4);
 		container.add(bgLabel);
-		setSize(800, 1000);//컨테이너크기설정
+		setSize(800, 1000);// 컨테이너크기설정
+		screenSizeLocation(); // 화면을 항상 가운데로오게만듬
 		setVisible(true);
-		 // 1. 컴포넌트 생성
+		// 1. 컴포넌트 생성
 
-		JTextField jtf = new JTextField();// 2. 스크롤바가 없는 컴포넌트에 스크롤바 추가 
-		//JScrollPane jsp = new JScrollPane(컴포넌트객체명);
+		JTextField jtf = new JTextField();// 2. 스크롤바가 없는 컴포넌트에 스크롤바 추가
+		// JScrollPane jsp = new JScrollPane(컴포넌트객체명);
 		JScrollPane jsp = new JScrollPane(jtf);
 
-		// 3. 윈도우컴포넌트에 부착  
+		// 3. 윈도우컴포넌트에 부착
 		add("Center", jsp);
-		
+
+	}
+
+	public void screenSizeLocation() {
+		Dimension frameSize = getSize(); // 컴포넌트 크기
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 모니터 화면의 크기 구하기 // (모니터화면 가로 - 프레임화면 가로) /
+																			// 2, (모니터화면 세로 - 프레임화면 세로) / 2
+		setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
 	}
 
 	/*
