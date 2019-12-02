@@ -16,6 +16,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -44,6 +48,9 @@ public class Fish implements ActionListener, KeyListener {
 	public static Timer timerfish0;
 	public static Timer timerfishbone;
 	public static int speed;
+	public static int penguinwidth = 80;
+	public static int penguinheight = 90;
+	public static int cnt=0;
 	public Fish() {
 		JFrame jframe = new JFrame();
 		timerfish0 = new Timer(1500, new ActionListener() { // 생선 객체 생성
@@ -64,7 +71,7 @@ public class Fish implements ActionListener, KeyListener {
 				fishbone0.add(new Rectangle(dropfishbone + 40, 0, 40, 40));
 			}
 		});
-		Timer timer2 = new Timer(10, this);
+		Timer timer2 = new Timer(3, this);
 		panel = new Mypanel();
 		rand = new Random();
 		jframe.add(panel);
@@ -81,7 +88,7 @@ public class Fish implements ActionListener, KeyListener {
 		fish0 = new ArrayList<Rectangle>();
 		heart0 = new ArrayList<Rectangle>();
 		fishbone0 = new ArrayList<Rectangle>();
-		penguin = new Rectangle(WIDTH / 2, HEIGHT - 175, 100, 100);
+		penguin = new Rectangle(WIDTH / 2, HEIGHT - 175, penguinwidth, penguinheight);
 		/* 신필 펭귄사이즈 -30 ㄱㄱ */
 		timer2.start();
 		timerfish0.start();
@@ -103,38 +110,47 @@ public class Fish implements ActionListener, KeyListener {
 	}
 
 	public void repaint(Graphics g) {
-		ImageIcon i2 = new ImageIcon("image/penguin.jpg");
+		ImageIcon i1 = new ImageIcon("image/back.jpg");
+		Image image1 = i1.getImage();
+		g.drawImage(image1, 0, 0, WIDTH, HEIGHT, null);
+//		g.setColor(Color.white);
+//		g.fillRect(0, HEIGHT - 80, WIDTH, 120);
+		ImageIcon i2;
+		if(cnt%6 ==0 || cnt%6 ==1) {i2 = new ImageIcon("image/penguin1.png");}
+		else if(cnt%6 ==2 || cnt%6 ==3) {i2 = new ImageIcon("image/penguin2.png");}
+		else {i2 = new ImageIcon("image/penguin3.png");}
 		Image image2 = i2.getImage();
+		cnt++;
 		if (xMotion > 0) {
-			g.drawImage(image2, penguin.x, penguin.y, penguin.x + 100, penguin.y + 100, 0, 0, 320, 391, null);
+			g.drawImage(image2, penguin.x, penguin.y, penguin.x + penguinwidth, penguin.y + penguinheight, 0, 0, 2403, 2365, null);
 		} else {
-			g.drawImage(image2, penguin.x, penguin.y, penguin.x + 100, penguin.y + 100, 0, 0, 320, 391, null);
+			g.drawImage(image2, penguin.x, penguin.y, penguin.x + penguinwidth, penguin.y + penguinheight, 0, 0, 2403, 2365, null);
 		}
 		if (yMotion > 0) {
-			g.drawImage(image2, penguin.x, penguin.y, penguin.x + 100, penguin.y + 100, 0, 0, 320, 391, null);
+			g.drawImage(image2, penguin.x, penguin.y, penguin.x + penguinwidth, penguin.y + penguinheight, 0, 0, 2403, 2365, null);
 		} else {
-			g.drawImage(image2, penguin.x, penguin.y, penguin.x + 100, penguin.y + 100, 0, 0, 320, 391, null);
+			g.drawImage(image2, penguin.x, penguin.y, penguin.x + penguinwidth, penguin.y + penguinheight, 0, 0, 2403, 2365, null);
 		}
 
 		for (int i = 0; i < life; i++) {
-			ImageIcon i3 = new ImageIcon("image/heart.png");
+			ImageIcon i3 = new ImageIcon("image/heart1.png");							//현재 라이프 이미지삽입
 			Image image3 = i3.getImage();
-			g.drawImage(image3, 30 + i * 70, 30, 90 + i * 70, 90, 0, 0, 60, 60, null);
+			g.drawImage(image3, 30 + i * 70, 30, 90 + i * 70, 90, 0, 0, 800, 800, null);
 		}
 		for (Rectangle fish : fish0) {
 			ImageIcon i0 = new ImageIcon("image/fish.png");
 			Image image0 = i0.getImage();
-			g.drawImage(image0, fish.x, fish.y, fish.x + 40, fish.y + 40, 0, 0, 379, 373, null);
+			g.drawImage(image0, fish.x, fish.y, fish.x + 40, fish.y + 40, 0, 0, 400, 400, null);
 		}
 		for (Rectangle heart : heart0) {
-			ImageIcon i0 = new ImageIcon("image/heart.png");
+			ImageIcon i0 = new ImageIcon("image/heart0.png");
 			Image image0 = i0.getImage();
-			g.drawImage(image0, heart.x, heart.y, heart.x + 40, heart.y + 40, 0, 0, 40, 40, null);
+			g.drawImage(image0, heart.x, heart.y, heart.x + 40, heart.y + 40, 0, 0, 400, 400, null);
 		}
 		for (Rectangle fishbone : fishbone0) {
 			ImageIcon i0 = new ImageIcon("image/fishbone.png");
 			Image image0 = i0.getImage();
-			g.drawImage(image0, fishbone.x, fishbone.y, fishbone.x + 40, fishbone.y + 40, 0, 0, 400, 467, null);
+			g.drawImage(image0, fishbone.x, fishbone.y, fishbone.x + 40, fishbone.y + 40, 0, 0, 400, 400, null);
 		}
 		g.setColor(Color.black);
 		g.setFont(new Font("Arial", 1, 80));
@@ -152,6 +168,7 @@ public class Fish implements ActionListener, KeyListener {
 			timerheart.stop();
 			timerfishbone.stop();
 		}
+
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
@@ -220,7 +237,7 @@ public class Fish implements ActionListener, KeyListener {
 					life++;
 				}
 				it.remove();
-				loadAudio("audio/heart.wav");
+				loadAudio("audio/fish.wav");
 				clip.start();
 			}
 		}
@@ -229,7 +246,7 @@ public class Fish implements ActionListener, KeyListener {
 			if (value.intersects(penguin)) {
 				life--;
 				it.remove();
-				loadAudio("audio/fishbone.wav");
+				loadAudio("audio/fishbone.mp3");
 				clip.start();
 			}
 			if (life <= 0) {
