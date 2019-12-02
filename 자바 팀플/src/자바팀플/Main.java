@@ -49,6 +49,13 @@ import java.awt.Image;
 	      Image i = Toolkit.getDefaultToolkit().getImage("image/fishbone.png");
 	      container.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(i,new Point(0,0), ""));//기본커서
 	      JButton btn1 = new JButton("게임시작");
+	      JButton btn2= new JButton("게임설명");
+	      ImageIcon normallcon = new ImageIcon("image/penguin.jpg"); //노말 이미지
+	      ImageIcon rolloverIcon = new ImageIcon("image/penguin_dead.jpg"); //마우스올라갈때
+	      btn1.setRolloverIcon(rolloverIcon);
+	      btn1.setIcon(normallcon);
+	      btn2.setRolloverIcon(rolloverIcon);
+	      btn2.setIcon(normallcon);
 	      btn1.addMouseListener(new MouseAdapter() {
 
 	         public void mousePressed(MouseEvent e) {
@@ -59,16 +66,14 @@ import java.awt.Image;
 	         }
 	         public void mouseEntered(MouseEvent e) { //마우스가 위로올라갈때
 	            JButton button = (JButton) e.getSource();
-	            button.setBackground(Color.RED);
 	            button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(j,new Point(0,0), ""));
 	         }
 	         public void mouseExited(MouseEvent e) { //마우스가 나올때
 	            JButton button = (JButton) e.getSource();
-	            button.setBackground(Color.BLUE);
 	            button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(i,new Point(0,0), ""));
 	         }
 	      });
-	      JButton btn2= new JButton("게임설명");
+
 	      btn2.addMouseListener(new MouseAdapter() {
 	         public void mousePressed(MouseEvent e) {
 	            clip.stop();
@@ -78,13 +83,11 @@ import java.awt.Image;
 	         }
 	         public void mouseEntered(MouseEvent e) {
 	            JButton button = (JButton) e.getSource();
-	            button.setBackground(Color.RED);
 	            button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(j,new Point(0,0), ""));
 
 	         }
 	         public void mouseExited(MouseEvent e) {
 	            JButton button = (JButton) e.getSource();
-	            button.setBackground(Color.BLUE);
 	            button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(i,new Point(0,0), ""));
 	         }
 	      });
@@ -93,10 +96,8 @@ import java.awt.Image;
 	      /*
 	       * 버튼 위치 및 크기 설정 버튼 색깔 지정 버튼 글자 색깔 지정
 	       */
-	      btn1.setBounds(250, 673, 150, 100);
-	      btn1.setBackground(Color.BLUE);
-	      btn2.setBounds(450, 673, 150, 100);
-	      btn2.setBackground(Color.BLUE);
+	      btn1.setBounds(300, 550, 250, 75);
+	      btn2.setBounds(300, 700, 250, 75);
 	// btn1.setForeground(Color.WHITE);
 	      /*
 	       * 버튼 2 과 게임 2 연결운전

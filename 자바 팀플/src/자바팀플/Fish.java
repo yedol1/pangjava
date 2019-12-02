@@ -53,6 +53,7 @@ public class Fish implements ActionListener, KeyListener {
 	public static int cnt=0;
 	public static int sx=0;
 	public static int sy=0;
+	public static int p_speed = 5; //팽귄스피드
 	public boolean gameOverSound = false;
 	public static ImageIcon i1 = new ImageIcon("image/back1.jpg");		//배경 이미지
 	public static ImageIcon iheart1 = new ImageIcon("image/heart1.png");//현재 라이프 이미지삽입		
@@ -62,6 +63,7 @@ public class Fish implements ActionListener, KeyListener {
 	public static ImageIcon ifish = new ImageIcon("image/fish.png");
 	public static ImageIcon iheart0 = new ImageIcon("image/heart0.png");
 	public static ImageIcon ifishbone = new ImageIcon("image/fishbone.png");
+	public static ImageIcon image_3 = new ImageIcon("image/penguin_dead.jpg"); //죽은팽귄
 	public static int fishbonedelay = 1600;
 	public Fish() {
 		JFrame jframe = new JFrame();
@@ -134,17 +136,8 @@ public class Fish implements ActionListener, KeyListener {
 		else {image2 = penguin3.getImage();}
 		
 		cnt++;
-		if (xMotion > 0) {
-			g.drawImage(image2, penguin.x, penguin.y, penguin.x + penguinwidth, penguin.y + penguinheight, 0, 0, 2403, 2365, null);
-		} else {
-			g.drawImage(image2, penguin.x, penguin.y, penguin.x + penguinwidth, penguin.y + penguinheight, 0, 0, 2403, 2365, null);
-		}
-		if (yMotion > 0) {
-			g.drawImage(image2, penguin.x, penguin.y, penguin.x + penguinwidth, penguin.y + penguinheight, 0, 0, 2403, 2365, null);
-		} else {
-			g.drawImage(image2, penguin.x, penguin.y, penguin.x + penguinwidth, penguin.y + penguinheight, 0, 0, 2403, 2365, null);
-		}
-
+		if(!gameOver)g.drawImage(image2, penguin.x, penguin.y, penguin.x + penguinwidth, penguin.y + penguinheight, 0, 0, 2403, 2365, null);
+		// 팽귄리페인트
 		for (int i = 0; i < life; i++) {
 			
 			Image image3 = iheart1.getImage();
@@ -174,6 +167,8 @@ public class Fish implements ActionListener, KeyListener {
 			g.drawString("Game Over!", 170, 200);
 			g.setFont(new Font("Arial", 1, 100));
 			g.drawString(String.valueOf(score), 370, 300);
+			Image image3 = image_3.getImage(); //죽은팽귄
+			g.drawImage(image3, penguin.x, penguin.y, penguin.x + penguinwidth, penguin.y + penguinheight, 0, 0, 2403, 2365, null);
 			fish0.clear();
 			fishbone0.clear();
 			heart0.clear();
@@ -193,12 +188,12 @@ public class Fish implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent arg0) {
 		
 		if(score==100) {speed=2;
-		timerfishbone = new Timer(1400, new ActionListener() { // 생선뼈 객체 생성
+		/*timerfishbone = new Timer(1400, new ActionListener() { // 생선뼈 객체 생성
 			public void actionPerformed(ActionEvent arg0) {
 				int dropfishbone = rand.nextInt(WIDTH - 80);
 				fishbone0.add(new Rectangle(dropfishbone + 40, 0, 40, 40));
 			}
-		});
+		});*/
 		timerfishbone.start();
 		}
 		if(score==200) speed=4;
@@ -223,14 +218,18 @@ public class Fish implements ActionListener, KeyListener {
 				fishbone.y += speed+speed/2;
 			}
 		}
-		penguin.x += xMotion;
+		if(!gameOver) {
+		if(KeyUp == true) penguin.y -= p_speed;
+		if(KeyDown == true)penguin.y += p_speed;
+		if(KeyLeft == true) penguin.x -= p_speed;
+		if(KeyRight == true) penguin.x += p_speed;
+		}
 		if (penguin.x < 0) {
 			penguin.x = 0;
 		}
 		if (penguin.x > WIDTH - 100) {
 			penguin.x = WIDTH - 100;
 		}
-		penguin.y += yMotion;
 		if (penguin.y < 0) {
 			penguin.y = 0;
 		}
@@ -283,93 +282,49 @@ public class Fish implements ActionListener, KeyListener {
 		panel.repaint();
 	}
 
-	public void Xrightmove(boolean A) {
-		
-		if (!started) {
-//			life = 3;
-//			score = 0;
-//			started = true;
-		} else if (!gameOver) {
-			if (A == true)
-				xMotion = 5;
-			else
-				xMotion = 0;
+	boolean KeyUp = false; //키보드 입력 처리를 위한 변수
+	boolean KeyDown = false;
+	boolean KeyLeft = false;
+	boolean KeyRight = false;
+
+	public void keyPressed(KeyEvent e){
+		// 키보드가 눌러졌을때 이벤트 처리하는 곳
+		if(!gameOver) {
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_UP :
+		KeyUp = true;
+		break;
+		case KeyEvent.VK_DOWN :
+		KeyDown = true;
+		break;
+		case KeyEvent.VK_LEFT :
+		KeyLeft = true;
+		break;
+		case KeyEvent.VK_RIGHT :
+		KeyRight = true;
+		break;
+		}
 		}
 	}
-
-	public void Xleftmove(boolean A) {
-		
-		if (!started) {
-//			life = 3;
-//			score = 0;
-//			started = true;
-		} else if (!gameOver) {
-			if (A == true)
-				xMotion = -5;
-			else
-				xMotion = 0;
+		public void keyReleased(KeyEvent e){
+		// 키보드가 눌러졌다가 때어졌을때 이벤트 처리하는 곳
+		if(!gameOver) {
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_UP :
+		KeyUp = false;
+		break;
+		case KeyEvent.VK_DOWN :
+		KeyDown = false;
+		break;
+		case KeyEvent.VK_LEFT :
+		KeyLeft = false;
+		break;
+		case KeyEvent.VK_RIGHT :
+		KeyRight = false;
+		break;
 		}
-	}
-
-	public void Yupmove(boolean A) {
-		
-		if (!started) {
-//			life = 3;
-//			score = 0;
-//			started = true;
-		} else if (!gameOver) {
-			if (A == true)
-				yMotion = -5;
-			else
-				yMotion = 0;
 		}
-	}
-
-	public void Ydownmove(boolean A) {
-		
-		if (!started) {
-//			life = 3;
-//			score = 0;
-//			started = true;
-		} else if (!gameOver) {
-			if (A == true)
-				yMotion = 5;
-			else
-				yMotion = 0;
 		}
-	}
-
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
-			Xleftmove(true);
-		}
-		if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
-			Xrightmove(true);
-		}
-		if (arg0.getKeyCode() == KeyEvent.VK_UP) {
-			Yupmove(true);
-		}
-		if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
-			Ydownmove(true);
-		}
-	}
-
-	public void keyReleased(KeyEvent arg0) {
-		if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
-			Xleftmove(false);
-		}
-		if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
-			Xrightmove(false);
-		}
-		if (arg0.getKeyCode() == KeyEvent.VK_UP) {
-			Yupmove(false);
-		}
-		if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
-			Ydownmove(false);
-		}
-	}
-
 	public void keyTyped(KeyEvent arg0) {
 	}
 
