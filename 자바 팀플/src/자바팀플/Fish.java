@@ -64,7 +64,7 @@ public class Fish implements ActionListener, KeyListener {
    public static int p_speed = 5; // 팽귄스피드
    public int dropairplane=0;
    public boolean gameOverSound = false;
-   public static ImageIcon i1 = new ImageIcon("image/back1.jpg"); // 배경 이미지
+   public static ImageIcon i1 = new ImageIcon("image/back1.png"); // 배경 이미지
    public static ImageIcon iheart1 = new ImageIcon("image/heart1.png"); // 현재 라이프 이미지삽입
    public static ImageIcon penguin1 = new ImageIcon("image/penguin1.png"); // 펭귄이미지1,2,3
    public static ImageIcon penguin2 = new ImageIcon("image/penguin2.png");
@@ -155,9 +155,9 @@ public class Fish implements ActionListener, KeyListener {
 
       // 움직이는 배경이미지
       Image image1 = i1.getImage();
-      g.drawImage(image1, 0, 0, WIDTH, HEIGHT, 0, 0 + sy, 113, 500 + sy, null);
-      sy++;
-      if (sy == 300)
+      g.drawImage(image1, 0, 0, WIDTH, HEIGHT, 0, 0 + sy, 550,  700+ sy, null);
+      sy=sy+1;
+      if (sy == 3000)
          sy = 0;
 
       Image image2;
