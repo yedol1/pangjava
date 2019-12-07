@@ -36,17 +36,14 @@ public class Main extends JFrame {
 		loadAudio("audio/main.wav"); // loadAudio 함수 호출
 		clip.start(); // 오디오 클립 실행
 		clip.loop(clip.LOOP_CONTINUOUSLY); // 오디오 클립 무한 반복 : 음악이 끝나면처음부터 다시 반복해줍니다.
-		Image j = Toolkit.getDefaultToolkit().getImage("image/fish.png"); // 커서들
-		Image i = Toolkit.getDefaultToolkit().getImage("image/fishbone.png");
+		Image j = Toolkit.getDefaultToolkit().getImage("image/cursor1.png"); // 커서들
+		Image i = Toolkit.getDefaultToolkit().getImage("image/cursor.png");
 		container.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(i, new Point(0, 0), ""));// 기본커서
-		JButton btn1 = new JButton("게임시작");
-		JButton btn2 = new JButton("게임설명");
-		ImageIcon normallcon = new ImageIcon("image/penguin.jpg"); // 노말 이미지
-		ImageIcon rolloverIcon = new ImageIcon("image/penguin_dead.jpg"); // 마우스올라갈때
+		JButton btn1 = new JButton();
+		ImageIcon normallcon = new ImageIcon("image/menu1.png"); // 노말 이미지
+		ImageIcon rolloverIcon = new ImageIcon("image/menu2.png"); // 마우스올라갈때
 		btn1.setRolloverIcon(rolloverIcon);
 		btn1.setIcon(normallcon);
-		btn2.setRolloverIcon(rolloverIcon);
-		btn2.setIcon(normallcon);
 		btn1.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				clip.stop();
@@ -64,33 +61,13 @@ public class Main extends JFrame {
 			}
 		});
 
-		btn2.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				clip.stop();
-				Fish.fish = new Fish();// 플라잉 펭귄게임 연결
-			}
-
-			public void mouseEntered(MouseEvent e) {
-				JButton button = (JButton) e.getSource();
-				button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(j, new Point(0, 0), ""));
-
-			}
-
-			public void mouseExited(MouseEvent e) {
-				JButton button = (JButton) e.getSource();
-				button.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(i, new Point(0, 0), ""));
-			}
-		});
 
 		// 버튼 위치 및 크기 설정 버튼 색깔 지정 버튼 글자 색깔 지정
-		btn1.setBounds(300, 550, 250, 75);
-		btn2.setBounds(300, 700, 250, 75);
+		btn1.setBounds(315, 775, 135, 45);
 		bgLabel.setBounds(0, 0, 800, 1000);// 배경화면 크기설정
 		
 		//컨테이너에 버튼 붙이기 
 		container.add(btn1);
-		container.add(btn2);
-
 		container.add(bgLabel);
 		setSize(800, 1000);// 컨테이너크기설정
 		screenSizeLocation(); // 화면을 항상 가운데로오게만듬
