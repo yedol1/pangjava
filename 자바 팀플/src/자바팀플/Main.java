@@ -42,8 +42,10 @@ public class Main extends JFrame {
 		JButton btn1 = new JButton();
 		ImageIcon normallcon = new ImageIcon("image/menu1.png"); // 노말 이미지
 		ImageIcon rolloverIcon = new ImageIcon("image/menu2.png"); // 마우스올라갈때
+
 		btn1.setRolloverIcon(rolloverIcon);
 		btn1.setIcon(normallcon);
+		
 		btn1.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				clip.stop();
@@ -63,6 +65,7 @@ public class Main extends JFrame {
 
 
 		// 버튼 위치 및 크기 설정 버튼 색깔 지정 버튼 글자 색깔 지정
+		
 		btn1.setBounds(315, 775, 135, 45);
 		bgLabel.setBounds(0, 0, 800, 1000);// 배경화면 크기설정
 		

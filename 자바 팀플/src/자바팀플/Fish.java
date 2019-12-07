@@ -72,8 +72,8 @@ public class Fish implements ActionListener, KeyListener {
    public static ImageIcon ifish = new ImageIcon("image/fish.png"); // 생선 이미지
    public static ImageIcon iheart0 = new ImageIcon("image/heart0.png"); // 라이프 이미지
    public static ImageIcon ifishbone = new ImageIcon("image/fishbone.png"); // 뼈 이미지(라이프-1)
-   public static ImageIcon iairplane = new ImageIcon("image/airplane.png"); // 비행기 이미지(라이프-3)(->)
-   public static ImageIcon iairplane1 = new ImageIcon("image/airplane.png"); // 비행기 이미지(라이프-3)(<-)
+   public static ImageIcon iairplane = new ImageIcon("image/airplane0.png"); // 비행기 이미지(라이프-3)(->)
+   public static ImageIcon iairplane1 = new ImageIcon("image/airplane1.png"); // 비행기 이미지(라이프-3)(<-)
    public static ImageIcon idangerous = new ImageIcon("image/dangerous.png"); // 경고 이미지
    public static ImageIcon image_3 = new ImageIcon("image/penguin_dead.jpg"); // 죽은팽귄
    public static Image j = Toolkit.getDefaultToolkit().getImage("image/cursor1.png"); // 커서들
@@ -99,11 +99,13 @@ public class Fish implements ActionListener, KeyListener {
             fishbone0.add(new Rectangle(dropfishbone + 40, 0, 40, 40));
          }
       });
-      timerairplane = new Timer(5000, new ActionListener() { // 비행기 객체 생성
+      timerairplane = new Timer(12000, new ActionListener() { // 비행기 객체 생성
          public void actionPerformed(ActionEvent arg0) {
             dropairplane = rand.nextInt(HEIGHT - 80);
             dangerous0.add(new Rectangle(20, dropairplane + 40, 40, 40));
             cntl = 1;
+            loadAudio("audio/dangerous.wav");
+            clip.start();
          }
       });
 
@@ -135,9 +137,9 @@ public class Fish implements ActionListener, KeyListener {
       timerfishbone.start();
       timerairplane.start();
       
-      loadMusic("audio/bgm.wav");
-      clipBackGroundMusic.start();
-      clipBackGroundMusic.loop(clipBackGroundMusic.LOOP_CONTINUOUSLY);
+		loadMusic("audio/bgm.wav");
+		clipBackGroundMusic.start();
+		clipBackGroundMusic.loop(clipBackGroundMusic.LOOP_CONTINUOUSLY);
    }
 
    public class Mypanel extends JPanel {
@@ -192,7 +194,7 @@ public class Fish implements ActionListener, KeyListener {
       if (0 < cntl && cntl < 200 && aircheck==0) {
          for (Rectangle dangerous : dangerous0) {
             Image image0 = idangerous.getImage();
-            g.drawImage(image0, dangerous.x, dangerous.y, dangerous.x + 40, dangerous.y + 40, 0, 0, 344, 304, null);
+            g.drawImage(image0, dangerous.x, dangerous.y, dangerous.x + 60, dangerous.y + 60, 0, 0, 400, 200, null);
          }
          cntl++;
          if(cntl==200) {
@@ -203,7 +205,7 @@ public class Fish implements ActionListener, KeyListener {
       if (0 < cntl && cntl < 200 && aircheck==1) {
          for (Rectangle dangerous : dangerous0) {
             Image image0 = idangerous.getImage();
-            g.drawImage(image0, WIDTH-60, dangerous.y, WIDTH-20, dangerous.y + 40, 0, 0, 344, 304, null);
+            g.drawImage(image0, WIDTH-80, dangerous.y, WIDTH-20, dangerous.y + 60, 0, 0, 400, 200, null);
          }
          cntl++;
          if(cntl==200) {
@@ -213,11 +215,11 @@ public class Fish implements ActionListener, KeyListener {
       }
       for (Rectangle airplane : airplane0) {
          Image image0 = iairplane.getImage();
-         g.drawImage(image0, airplane.x, airplane.y, airplane.x + 300, airplane.y + 100, 0, 0, 591, 197, null);
+         g.drawImage(image0, airplane.x, airplane.y, airplane.x + 300, airplane.y + 100, 0, 0, 180, 60, null);
       }
       for (Rectangle airplane : airplane1) {
          Image image0 = iairplane1.getImage();
-         g.drawImage(image0, WIDTH+airplane.x, airplane.y, WIDTH+airplane.x + 300, airplane.y + 100, 0, 0, 591, 197, null);
+         g.drawImage(image0, WIDTH+airplane.x, airplane.y, WIDTH+airplane.x + 300, airplane.y + 100, 0, 0, 180, 60, null);
       }
       g.setColor(Color.black);
       g.setFont(new Font("Arial", 1, 80));
@@ -240,25 +242,30 @@ public class Fish implements ActionListener, KeyListener {
          timerairplane.stop();
       }
       if(restart == true) { //다시시작
+    	 clip.stop();
          life=3;
          score=0;
          speed = 1;
-          timerfish0.start();
-          timerheart.start();
-          timerfishbone.start();
-          timerairplane.start();
+         timerfish0.start();
+         timerheart.start();
+         timerfishbone.start();
+         timerairplane.start();
        
-          KeyUp = false;
-           KeyDown = false;
-           KeyLeft = false;
-           KeyRight = false;
-           
-          penguin = new Rectangle(WIDTH / 2, HEIGHT - 175, penguinwidth, penguinheight);
-          
-          gameOver = false;
+         KeyUp = false;
+         KeyDown = false;
+         KeyLeft = false;
+         KeyRight = false;
+   
+         penguin = new Rectangle(WIDTH / 2, HEIGHT - 175, penguinwidth, penguinheight);
+         gameOver = false;
          restart=false;
+         gameOverSound = false;
+         loadMusic("audio/bgm.wav");
+         clipBackGroundMusic.start();
+         clipBackGroundMusic.loop(clipBackGroundMusic.LOOP_CONTINUOUSLY);
       }
       if (gameOver && !gameOverSound) {
+    	  clipBackGroundMusic.stop();
          loadAudio("audio/fail.wav");
          clip.start();
          gameOverSound = true;
@@ -272,10 +279,14 @@ public class Fish implements ActionListener, KeyListener {
       if (cntl == 199 && aircheck==0) {
          dangerous0.clear();
          airplane0.add(new Rectangle(-300, dropairplane + 100, 400, 150));
+         loadAudio("audio/airplane.wav");
+         clip.start();
       }
       else if (cntl == 199 && aircheck==1) {
          dangerous0.clear();
          airplane1.add(new Rectangle(WIDTH+300, dropairplane + 100, 400, 150));
+         loadAudio("audio/airplane.wav");
+         clip.start();
       }
       if (score == 100)
          speed = 2;
@@ -458,7 +469,7 @@ public class Fish implements ActionListener, KeyListener {
          e.printStackTrace();
       }
    }
-
+   
    private void loadMusic(String pathName) {
       try {
          clipBackGroundMusic = AudioSystem.getClip();
