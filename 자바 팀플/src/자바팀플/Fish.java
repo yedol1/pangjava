@@ -101,8 +101,8 @@ public class Fish implements ActionListener, KeyListener {
       });
       timerairplane = new Timer(12000, new ActionListener() { // 厚青扁 按眉 积己
          public void actionPerformed(ActionEvent arg0) {
-            dropairplane = rand.nextInt(HEIGHT - 80);
-            dangerous0.add(new Rectangle(20, dropairplane + 40, 40, 40));
+            dropairplane = rand.nextInt(HEIGHT - 180);
+            dangerous0.add(new Rectangle(20, dropairplane + 90, 100,100 ));
             cntl = 1;
             loadAudio("audio/dangerous.wav");
             clip.start();
@@ -194,7 +194,7 @@ public class Fish implements ActionListener, KeyListener {
       if (0 < cntl && cntl < 200 && aircheck==0) {
          for (Rectangle dangerous : dangerous0) {
             Image image0 = idangerous.getImage();
-            g.drawImage(image0, dangerous.x, dangerous.y, dangerous.x + 60, dangerous.y + 60, 0, 0, 400, 200, null);
+            g.drawImage(image0, dangerous.x, dangerous.y, dangerous.x + 100, dangerous.y + 100, 0, 0, 400, 200, null);
          }
          cntl++;
          if(cntl==200) {
@@ -205,7 +205,7 @@ public class Fish implements ActionListener, KeyListener {
       if (0 < cntl && cntl < 200 && aircheck==1) {
          for (Rectangle dangerous : dangerous0) {
             Image image0 = idangerous.getImage();
-            g.drawImage(image0, WIDTH-80, dangerous.y, WIDTH-20, dangerous.y + 60, 0, 0, 400, 200, null);
+            g.drawImage(image0, WIDTH-120, dangerous.y, WIDTH-20, dangerous.y + 100, 0, 0, 400, 200, null);
          }
          cntl++;
          if(cntl==200) {
@@ -284,7 +284,7 @@ public class Fish implements ActionListener, KeyListener {
       }
       else if (cntl == 199 && aircheck==1) {
          dangerous0.clear();
-         airplane1.add(new Rectangle(WIDTH+300, dropairplane + 100, 400, 150));
+         airplane1.add(new Rectangle(WIDTH+100, dropairplane + 100, 400, 150));
          loadAudio("audio/airplane.wav");
          clip.start();
       }
